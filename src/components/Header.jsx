@@ -1,6 +1,14 @@
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Header = () => {
+
+  let navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <>
       <div>
@@ -20,7 +28,7 @@ export const Header = () => {
               </span>
             </a>
             <div className="flex items-center space-x-6 rtl:space-x-reverse">
-              <button className="block px-4 py-2 mt-1 text-xs font-semibold rounded-lg bg-green_three text-white hover:bg-red-600 hover:text-white focus:bg-green_three focus:text-white focus:outline-none focus:shadow-outline sm:text-lg">
+              <button onClick={handleLogin} className="block px-4 py-2 mt-1 text-xs font-semibold rounded-lg bg-green_three text-white hover:bg-red-600 hover:text-white focus:bg-green_three focus:text-white focus:outline-none focus:shadow-outline sm:text-lg">
                 Login
               </button>
             </div>
@@ -32,29 +40,29 @@ export const Header = () => {
           <div className="flex items-center">
             <ul className="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className="block px-4 py-2 text-sm font-semibold rounded-lg  hover:bg-green_three hover:text-white focus:bg-green_three focus:text-white focus:outline-none focus:shadow-outline"
                   aria-current="page"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/profile"
                   className="block px-4 py-2 text-sm font-semibold rounded-lg  hover:bg-green_three hover:text-white focus:bg-green_three focus:text-white focus:outline-none focus:shadow-outline"
                 >
                   Profile
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/report"
                   className="block px-4 py-2 text-sm font-semibold rounded-lg  hover:bg-green_three hover:text-white focus:bg-green_three focus:text-white focus:outline-none focus:shadow-outline"
                 >
                   Report
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
