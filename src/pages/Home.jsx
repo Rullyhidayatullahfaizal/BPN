@@ -1,13 +1,15 @@
 import React from 'react'
 import { Header } from '../components/Header'
 import { Footer } from '../components/Footer'
+import { Card } from '../components/card'
 
 export const Home = () => {
   return (
     <>
-      <div className="">
+      <div className="flex flex-col min-h-screen bg-[#FFFBDA]">
         <Header></Header>
-        <div className="text-center">hello word</div>
+        <Card></Card>
+        <div className="text-center"></div>
         <Footer></Footer>
       </div>
     </>

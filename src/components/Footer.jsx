@@ -5,7 +5,7 @@ import { AddressBook,Phone,EnvelopeSimpleOpen  } from "@phosphor-icons/react";
 export const Footer = () => {
   return (
     <>
-      <footer className="bg-green_one  bottom-0 w-full  dark:bg-gray-900">
+      <footer className="bg-green_one  bottom-0 w-full mt-80  dark:bg-gray-900">
         <div className="mx-auto  w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="md:flex md:justify-between">
             <div className="mb-6 md:mb-0">
