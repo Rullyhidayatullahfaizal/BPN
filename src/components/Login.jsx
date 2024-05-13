@@ -1,33 +1,31 @@
 import { EnvelopeSimple } from "@phosphor-icons/react";
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [msg, setMsg] = useState('');
-    const navigate = useNavigate();
-
-    const Auth = async (e) => {
-      e.preventDefault();
-      try {
-        const response = await axios.post('http://localhost:5000/login', {
-            email: email,
-            password: password
-        });
-        const token = response.data.token;
-        // Simpan token di local storage
-        localStorage.setItem('token', token);
-        navigate("/");
+  const Auth = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:5000/login", {
+        email: email,
+        password: password,
+      });
+      const token = response.data.token;
+      // Simpan token di local storage
+      localStorage.setItem("token", token);
+      navigate("/");
     } catch (error) {
-        if (error.response) {
-            setMsg(error.response.data.msg);
-        }
+      if (error.response) {
+        setMsg(error.response.data.msg);
+      }
     }
-  }
+  };
 
   return (
     <>
@@ -92,9 +90,12 @@ export const Login = () => {
 
               <div className="flex flex-row items-center justify-center pb-4 mb-4">
                 <p className="mb-0 font-semibold">Don't have an account?</p>
-                <button className="mx-2 bg-transparent border border-green_three text-green_two hover:bg-red-500 bg-black hover:text-white rounded">
+                <a
+                  href="mailto:recipient@example.com"
+                  className="mx-2 bg-transparent border border-green_three text-green_two hover:bg-red-500 bg-black hover:text-white rounded"
+                >
                   <EnvelopeSimple size={32} />
-                </button>
+                </a>
               </div>
             </div>
           </div>

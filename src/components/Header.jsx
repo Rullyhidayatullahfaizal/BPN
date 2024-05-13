@@ -102,6 +102,14 @@ export const Header = () => {
                   Report
                 </Link>
               </li>
+              <li>
+                <Link
+                  to="/peta"
+                  className="block px-4 py-2 text-sm font-semibold rounded-lg  hover:bg-green_three hover:text-white focus:bg-green_three focus:text-white focus:outline-none focus:shadow-outline"
+                >
+                  Detail Peta
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
