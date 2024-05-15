@@ -23,7 +23,7 @@ export const Card = () => {
 
   return (
     <div>
-      <div className="px-0 sm:px-0 md:px-0 lg:px-0 xl:px-20">
+      <div className="px-0 sm:px-0  sm:pt-20 md:px-0 lg:px-0 xl:px-20">
         <div className="rounded-lg  bg-green_three flex flex-col  items-center justify-center">
           <h1 className="header-beras texl-sm sm:text-4xl mt-10 mb-10 text-yellow font-bold  ">
             Daftar Harga Beras Nasional

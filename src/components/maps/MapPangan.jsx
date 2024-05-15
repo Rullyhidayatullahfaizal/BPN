@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { MapContainer, GeoJSON, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./MapPangan.css";
+import { ModalContent } from "./ModalContent"; // Pastikan pathnya benar
 import { BarBpn } from "../statistik/BarsBpn";
 import { RowBpn } from "../statistik/RowBpn";
+import { GridBpn } from "../statistik/GridBpn";
 
 export const MapPangan = ({ countries }) => {
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalContentVisible, setModalContentVisible] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: "", content: "" });
+
   
   const mapStyle = {
     fillColor: "green",
@@ -64,6 +69,11 @@ export const MapPangan = ({ countries }) => {
   //     coordinates: [capitalCoordinates[1], capitalCoordinates[0]]
   //   };
   // });
+
+  const openModal = (title, content) => {
+    setModalContent({ title, content });
+    setModalContentVisible(true);
+  };
   
   return (
     <>
@@ -79,6 +89,43 @@ export const MapPangan = ({ countries }) => {
           </Marker>
         ))} */}
       </MapContainer>
+      <div className="flex gap-5 px-5 pt-2 text-3xl">
+        <button
+          className="bg-green_three px-5 py-2 text-white rounded hover:text-yellow hover:bg-red-600"
+          onClick={() => openModal("Laporan", 
+          <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, porro ipsa consequatur eum rem hic exercitationem illum, qui fugiat esse voluptatem, ad cumque quisquam beatae dolorem voluptate laborum aut earum!
+          </div>)}
+        >
+          Laporan
+        </button>
+        <button
+          className="bg-green_three px-5 py-2 text-white rounded hover:text-yellow hover:bg-red-600"
+          onClick={() => openModal("Ket Indikator", <div>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus magnam quos eaque. Incidunt, voluptate est. Officia impedit, voluptate aliquam accusamus, velit sint at commodi porro quisquam harum qui omnis neque!
+          </div>)}
+        >
+          Ket Indikator
+        </button>
+        <button
+          className="bg-green_three px-5 py-2 text-white rounded hover:text-yellow hover:bg-red-600"
+          onClick={() => openModal("Tabel Data", <GridBpn></GridBpn>)}
+        >
+          Tabel Data
+        </button>
+        <button
+          className="bg-green_three px-5 py-2 text-white rounded hover:text-yellow hover:bg-red-600"
+          onClick={() => openModal("Panduan", <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, veniam consequuntur! Cumque eum iste rem odio voluptatibus quia blanditiis ex aut quae amet? Odio veritatis consectetur asperiores officia quis explicabo.</div>)}
+        >
+          Panduan
+        </button>
+      </div>
+      <ModalContent
+        isVisible={modalContentVisible}
+        onClose={() => setModalContentVisible(false)}
+        title={modalContent.title}
+        content={modalContent.content}
+      />
 
       {modalVisible && (
         <div
