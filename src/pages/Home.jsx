@@ -5,6 +5,7 @@ import { Card } from '../components/card'
 import { Peta } from '../components/peta'
 import LandingOne from '../components/Landing'
 import { PartnerBpn } from '../components/PartnerBpn'
+import { Dashboard } from '../components/Dashboard'
 
 export const Home = () => {
   return (
@@ -15,6 +16,7 @@ export const Home = () => {
         <PartnerBpn></PartnerBpn>
         <Card></Card>
         <Peta></Peta>
+        <Dashboard></Dashboard>
         <div className="text-center"></div>
         <Footer></Footer>
       </div>
