@@ -144,14 +144,6 @@ export const Header = () => {
                       </li>
                       <li>
                         <Link
-                          to="#"
-                          className="block px-4 py-2 hover:bg-yellow hover:text-green_three dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                          Visi-Misi
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
                           to="/logo"
                           className="block px-4 py-2 hover:bg-yellow hover:text-green_three dark:hover:bg-gray-600 dark:hover:text-white"
                         >

@@ -1,11 +1,17 @@
 import React from "react";
 // import ReactDOM from "react-dom";
 import { AddressBook,Phone,EnvelopeSimpleOpen  } from "@phosphor-icons/react";
+import { useLocation } from 'react-router-dom';
+
 
 export const Footer = () => {
+
+  const location = useLocation();
+  const isProfilePage = location.pathname === '/profile';
+
   return (
     <>
-      <footer className="bg-green_one  bottom-0 w-full mt-20 dark:bg-gray-900 sm:mt-48">
+    <footer className={`bg-green_one bottom-0 w-full ${isProfilePage ? 'mt-0' : 'mt-48'} dark:bg-gray-900 sm:${isProfilePage ? 'mt-0' : 'mt-48'}`}> 
         <div className="mx-auto  w-full max-w-screen-xl p-4 py-6 lg:py-8">
           <div className="md:flex md:justify-between">
             <div className="mb-6 md:mb-0">

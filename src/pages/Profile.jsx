@@ -7,7 +7,7 @@ import { Visi } from "../components/about/Visi";
 export const Profile = () => {
   return (
     <>
-      <div className="  min-h-screen bg-[#FFFBDA]">
+      <div className="bg-[#FFFBDA] w-full min-h-screen box-border">
         <Header></Header>
         <Sejarah></Sejarah>
         <Visi></Visi>
