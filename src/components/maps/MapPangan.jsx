@@ -1,18 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MapContainer, GeoJSON, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./MapPangan.css";
-import { ModalContent } from "./ModalContent"; // Pastikan pathnya benar
+import { ModalContent } from "./ModalContent"; 
 import { BarBpn } from "../statistik/BarsBpn";
 import { RowBpn } from "../statistik/RowBpn";
 import { GridBpn } from "../statistik/GridBpn";
+import axios from "axios";
 
 export const MapPangan = ({ countries }) => {
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContentVisible, setModalContentVisible] = useState(false);
   const [modalContent, setModalContent] = useState({ title: "", content: "" });
+  const [prediksiData,setPrediksiData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/prediksi-lstm');
+        setPrediksiData(response.data);
+        // console.log(setPrediksiData)
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (selectedProvince) {
+      const filtered = prediksiData.filter(data => data.Provinsi === selectedProvince);
+      setFilteredData(filtered);
+      console.log("Filtered Data for Province:", selectedProvince, filtered);
+    }
+  }, [selectedProvince, prediksiData]);
   
   const mapStyle = {
     fillColor: "green",
@@ -58,7 +82,7 @@ export const MapPangan = ({ countries }) => {
     layer.setStyle(mapStyle); // Use original style defined in mapStyle
   };
 
-  console.log(countries)
+  // console.log("daftar negara baris ke 61" + {countries})
 
   // const provinceCapitals = countries.Features.map(feature => {
   //   // Flattening the coordinates array to find a central point
@@ -164,7 +188,7 @@ export const MapPangan = ({ countries }) => {
                 </button>
               </div>
               <div className="p-4 md:p-2 space-y-0">
-                <BarBpn></BarBpn>
+                <BarBpn dataset={filteredData}></BarBpn>
                 <RowBpn></RowBpn>
               </div>
               <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">

@@ -2,6 +2,9 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
 
 function TickParamsSelector({
 
@@ -12,6 +15,54 @@ function TickParamsSelector({
     </Stack>
   );
 }
+
+
+const valueFormatter = (value) => `${value}`;
+
+const chartSetting = {
+  yAxis: [
+    {
+      label: 'Prediksi Harga',
+    },
+  ],
+  series: [{ dataKey: 'Prediksi_Harga', label: 'Prediksi Harga', valueFormatter }],
+  height: 300,
+  sx: {
+    [`& .${axisClasses.directionY} .${axisClasses.label}`]: {
+      transform: 'translateX(-10px)',
+    },
+  },
+};
+
+export const BarBpn = ({dataset}) => {
+  const [tickPlacement, setTickPlacement] = React.useState('middle');
+  const [tickLabelPlacement, setTickLabelPlacement] = React.useState('middle');
+  
+
+  return (
+    <div style={{ width: '100%' }}>
+      <TickParamsSelector
+        tickPlacement={tickPlacement}
+        tickLabelPlacement={tickLabelPlacement}
+        setTickPlacement={setTickPlacement}
+        setTickLabelPlacement={setTickLabelPlacement}
+      />
+      <BarChart
+        dataset={dataset}
+        xAxis={[
+          { scaleType: 'band', dataKey: 'Tanggal', tickPlacement, tickLabelPlacement },
+        ]}
+        {...chartSetting}
+      />
+    </div>
+  );
+}
+
+
+
+
+
+
 
 const dataset = [
   {
@@ -99,43 +150,3 @@ const dataset = [
     month: 'Dec',
   },
 ];
-
-const valueFormatter = (value) => `${value}mm`;
-
-const chartSetting = {
-  yAxis: [
-    {
-      label: 'rainfall (mm)',
-    },
-  ],
-  series: [{ dataKey: 'seoul', label: 'Seoul rainfall', valueFormatter }],
-  height: 300,
-  sx: {
-    [`& .${axisClasses.directionY} .${axisClasses.label}`]: {
-      transform: 'translateX(-10px)',
-    },
-  },
-};
-
-export const BarBpn = () => {
-  const [tickPlacement, setTickPlacement] = React.useState('middle');
-  const [tickLabelPlacement, setTickLabelPlacement] = React.useState('middle');
-
-  return (
-    <div style={{ width: '100%' }}>
-      <TickParamsSelector
-        tickPlacement={tickPlacement}
-        tickLabelPlacement={tickLabelPlacement}
-        setTickPlacement={setTickPlacement}
-        setTickLabelPlacement={setTickLabelPlacement}
-      />
-      <BarChart
-        dataset={dataset}
-        xAxis={[
-          { scaleType: 'band', dataKey: 'month', tickPlacement, tickLabelPlacement },
-        ]}
-        {...chartSetting}
-      />
-    </div>
-  );
-}
