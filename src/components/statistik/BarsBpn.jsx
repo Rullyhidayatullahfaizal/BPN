@@ -2,9 +2,7 @@ import * as React from 'react';
 import Stack from '@mui/material/Stack';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
-import { useEffect } from 'react';
-import axios from 'axios';
-import { useState } from 'react';
+
 
 function TickParamsSelector({
 
@@ -17,15 +15,15 @@ function TickParamsSelector({
 }
 
 
-const valueFormatter = (value) => `${value}`;
+const valueFormatter = (value) => `Rp ${value}`;
 
 const chartSetting = {
   yAxis: [
     {
-      label: 'Prediksi Harga',
+      label: '',
     },
   ],
-  series: [{ dataKey: 'Prediksi_Harga', label: 'Prediksi Harga', valueFormatter }],
+  series: [{ dataKey: 'Prediksi_Harga', label: 'Hasil Prediksi Lstm ', valueFormatter }],
   height: 300,
   sx: {
     [`& .${axisClasses.directionY} .${axisClasses.label}`]: {

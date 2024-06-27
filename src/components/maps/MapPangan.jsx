@@ -7,21 +7,38 @@ import { BarBpn } from "../statistik/BarsBpn";
 import { RowBpn } from "../statistik/RowBpn";
 import { GridBpn } from "../statistik/GridBpn";
 import axios from "axios";
+import { BarBpnTwo } from "../statistik/BarsBpnTwo";
+import { RowBpnTwo } from "../statistik/RowBpnTwo";
 
 export const MapPangan = ({ countries }) => {
   const [selectedProvince, setSelectedProvince] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalContentVisible, setModalContentVisible] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('LSTM'); // Menyimpan opsi yang dipilih
   const [modalContent, setModalContent] = useState({ title: "", content: "" });
   const [prediksiData,setPrediksiData] = useState([]);
+  const [dataset, setDataset] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [filteredDataTestingLstm, setFilteredDataTestingLstm] = useState([]);
+  const [datasetRandomForest,setDatasetRandomForest] = useState([])
+  const [filteredDataTestingRf, setFilteredDataTestingRf] = useState([]);
+  const [dataTestingrf,setDataTestingrf] = useState([]) 
+  const [filteredPrediksiRf,setFilteredPrediksiRf] = useState([])
 
+
+
+
+
+//hasil prediksi lstm
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:5000/prediksi-lstm');
-        setPrediksiData(response.data);
-        // console.log(setPrediksiData)
+        const cleanedData = response.data.map(item => ({
+          ...item,
+          Prediksi_Harga: Math.floor(parseFloat(item.Prediksi_Harga))
+        })).filter(item => !isNaN(item.Prediksi_Harga));
+        setPrediksiData(cleanedData);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -30,13 +47,105 @@ export const MapPangan = ({ countries }) => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (selectedProvince) {
-      const filtered = prediksiData.filter(data => data.Provinsi === selectedProvince);
-      setFilteredData(filtered);
-      console.log("Filtered Data for Province:", selectedProvince, filtered);
+
+// data testing lstm
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/testing-lstm');
+      console.log(response.data)
+      const cleanedData = response.data.map(item => ({
+        ...item,
+        Tanggal: item.Tanggal,
+        Harga_Sebenarnya: Math.floor(parseInt(item.Harga_Sebenarnya)),
+        Prediksi_Harga: Math.floor(parseFloat(item.Prediksi_Harga))
+      })).filter(item => !isNaN(item.Harga_Sebenarnya) && !isNaN(item.Prediksi_Harga));
+      setDataset(cleanedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-  }, [selectedProvince, prediksiData]);
+  };
+
+  fetchData();
+}, []);
+
+
+// hasil prediksi random forrest
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/prediksi-rf');
+      const cleanedData = response.data.map(item => ({
+        ...item,
+        Prediksi_Harga: Math.floor(parseFloat(item.Prediksi_Harga))
+      })).filter(item => !isNaN(item.Prediksi_Harga));
+      setDatasetRandomForest(cleanedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+//hasil testing random forrest
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/testing-rf');
+      console.log(response.data)
+      const cleanedData = response.data.map(item => ({
+        ...item,
+        Tanggal: item.Tanggal,
+        Harga_Sebenarnya: Math.floor(parseInt(item.Harga_Sebenarnya)),
+        Prediksi_Harga: Math.floor(parseFloat(item.Prediksi_Harga))
+      })).filter(item => !isNaN(item.Harga_Sebenarnya) && !isNaN(item.Prediksi_Harga));
+    setDataTestingrf(cleanedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+}, []);
+
+
+// Filter prediksiData based on selectedProvince lstm
+useEffect(() => {
+  if (selectedProvince && prediksiData.length > 0) {
+    const filtered = prediksiData.filter(data => data.Provinsi === selectedProvince);
+    setFilteredData(filtered);
+    console.log("Filtered Data for Province (prediksi lstm):", selectedProvince, filtered);
+  }
+}, [selectedProvince, prediksiData]);
+
+// Filter dataset based on selectedProvince lsm testing
+useEffect(() => {
+  if (selectedProvince && dataset.length > 0) {
+    const filtered = dataset.filter(data => data.Provinsi === selectedProvince);
+    setFilteredDataTestingLstm(filtered);
+    console.log("Filtered Data for Province (testing lstm):", selectedProvince, filtered);
+  }
+}, [selectedProvince, dataset]);
+
+
+//Filter prediksiData based on selectedProvince random forrest
+useEffect(() => {
+  if (selectedProvince && datasetRandomForest.length > 0) {
+    const filtered = datasetRandomForest.filter(data => data.Provinsi === selectedProvince);
+    setFilteredDataTestingRf(filtered);
+    console.log("Filtered Data for Province (prediksi lstm):", selectedProvince, filtered);
+ }
+}, [selectedProvince, datasetRandomForest]);
+
+// Filter dataset based on selectedProvince random forrest testing
+useEffect(() => {
+  if (selectedProvince && dataTestingrf.length > 0) {
+    const filtered = dataTestingrf.filter(data => data.Provinsi === selectedProvince);
+    setFilteredPrediksiRf(filtered);
+    console.log("Filtered Data for Province (testing lstm):", selectedProvince, filtered);
+  }
+}, [selectedProvince, dataTestingrf]);
   
   const mapStyle = {
     fillColor: "green",
@@ -131,12 +240,12 @@ export const MapPangan = ({ countries }) => {
         >
           Ket Indikator
         </button>
-        <button
+        {/* <button
           className="bg-green_three px-5 py-2 text-white rounded hover:text-yellow hover:bg-red-600"
           onClick={() => openModal("Tabel Data", <GridBpn></GridBpn>)}
         >
           Tabel Data
-        </button>
+        </button> */}
         <button
           className="bg-green_three px-5 py-2 text-white rounded hover:text-yellow hover:bg-red-600"
           onClick={() => openModal("Panduan", <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, veniam consequuntur! Cumque eum iste rem odio voluptatibus quia blanditiis ex aut quae amet? Odio veritatis consectetur asperiores officia quis explicabo.</div>)}
@@ -151,59 +260,78 @@ export const MapPangan = ({ countries }) => {
         content={modalContent.content}
       />
 
-      {modalVisible && (
-        <div
-          id="static-modal"
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1000]"
-        >
-          <div className="relative p-4 w-full max-w-2xl max-h-full">
-            <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <div className="flex justify-between items-center p-4 md:p-5 border-b rounded-t bg-green_two dark:border-gray-600">
-                <div className="flex-1 flex justify-center">
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                    STATISTIK {selectedProvince}
-                  </h3>
-                </div>
-                <button
-                  type="button"
-                  className="text-yellow bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={() => setModalVisible(false)}
-                >
-                  <svg
-                    className="w-3 h-3"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 14 14"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                    />
-                  </svg>
-                  <span className="sr-only">Close modal</span>
-                </button>
-              </div>
-              <div className="p-4 md:p-2 space-y-0">
-                <BarBpn dataset={filteredData}></BarBpn>
-                <RowBpn></RowBpn>
-              </div>
-              <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-                <button
-                  type="button"
-                  className="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-green_three rounded-lg border border-gray-200 hover:bg-green_one hover:text-red-500 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                  onClick={() => setModalVisible(false)}
-                >
-                  Tutup
-                </button>
-              </div>
+{modalVisible && (
+    <div
+      id="static-modal"
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[1000]"
+    >
+      <div className="relative p-4 w-full max-w-2xl max-h-full">
+        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <div className="flex justify-between items-center p-4 md:p-5 border-b rounded-t bg-green_two dark:border-gray-600">
+            <div>
+            <select
+                className="mr-0 py-2 px-2 border rounded bg-green_two font-semibold border-green_three"
+                value={selectedOption}
+                onChange={(e) => setSelectedOption(e.target.value)}
+              >
+                <option value="LSTM">LSTM</option>
+                <option value="RandomForest">Random Forest</option>
+              </select>
             </div>
+            <div className="flex-1 flex justify-center items-center mr-20">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                STATISTIK {selectedProvince}
+              </h3>
+            </div>
+            <button
+              type="button"
+              className="text-yellow bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+              onClick={() => setModalVisible(false)}
+            >
+              <svg
+                className="w-3 h-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 14"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                />
+              </svg>
+              <span className="sr-only">Close modal</span>
+            </button>
+          </div>
+          <div className="p-4 md:p-2 space-y-0">
+            {selectedOption === 'LSTM' ? (
+              <>
+                <BarBpn dataset={filteredData}></BarBpn>
+                <RowBpn dataset={filteredDataTestingLstm}></RowBpn>
+              </>
+            ) : (
+              <>
+              <BarBpnTwo dataset={filteredDataTestingRf}></BarBpnTwo>
+              <RowBpnTwo dataset={filteredPrediksiRf} />
+              </>
+            )}
+          </div>
+          <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+            <button
+              type="button"
+              className="py-2.5 px-5 ms-3 text-sm font-medium text-white focus:outline-none bg-green_three rounded-lg border border-gray-200 hover:bg-green_one hover:text-red-500 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+              onClick={() => setModalVisible(false)}
+            >
+              Tutup
+            </button>
           </div>
         </div>
-      )}
+      </div>
+    </div>
+  )}
     </>
   );
 };

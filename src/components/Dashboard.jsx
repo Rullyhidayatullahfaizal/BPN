@@ -7,7 +7,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { SelectedBpn } from './statistik/selected';
-import { RowBpnTwo } from './statistik/RowBpnTwo';
+import { GridBpn } from './statistik/GridBpn';
 
 const ProSpan = styled('span')({
   display: 'inline-block',
@@ -67,7 +67,7 @@ export const Dashboard = ({ title }) => {
         </div>
       </div>
       <div className='bg-white mt-4 sm:mt-0 border-4 border-green_two sm:w-1/2 sm:ml-4 lg:mt-10 lg:w-full'>
-        <RowBpnTwo />
+        <GridBpn></GridBpn>
       </div>
     </div>
   );

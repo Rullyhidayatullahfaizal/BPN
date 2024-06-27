@@ -1,18 +1,45 @@
 import * as React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
+import { axisClasses } from '@mui/x-charts/ChartsAxis';
 
-export const RowBpn = () => {
+export const RowBpn = ({ dataset }) => {
+
+
+  const valueFormatter = (value) => `Rp ${value}`;
+
+
+  const chartSetting = {
+    yAxis: [
+      {
+        label: '',
+      },
+    ],
+    series: [
+      { dataKey: 'Harga_Sebenarnya', label: 'Harga Sebenarnya', valueFormatter },
+      { dataKey: 'Prediksi_Harga', label: 'Harga Prediksi', valueFormatter }
+    ],
+    height: 300,
+    sx: {
+      [`& .${axisClasses.directionY} .${axisClasses.label}`]: {
+        transform: 'translateX(-10px)',
+      },
+    },
+  };
+
+  // Pastikan dataset tidak null atau undefined sebelum digunakan
+  if (!dataset || dataset.length === 0) {
+    return <div>No data available</div>;
+  }
+
   return (
-    <LineChart
-      xAxis={[{ data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }]}
-      series={[
-        {
-          data: [2, 3, 5.5, 8.5, 1.5, 5, 1, 4, 3, 8],
-          showMark: ({ index }) => index % 2 === 0,
-        },
-      ]}
-      width={500}
-      height={300}
-    />
+    <div style={{ width: '100%' }}>
+      <LineChart
+        dataset={dataset}
+        xAxis={[
+          { scaleType: 'band', dataKey: 'Tanggal' },
+        ]}
+        {...chartSetting}
+      />
+    </div>
   );
-}
+};

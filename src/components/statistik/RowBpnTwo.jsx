@@ -1,42 +1,44 @@
 import * as React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
+import { axisClasses } from '@mui/x-charts/ChartsAxis';
 
-export const RowBpnTwo = () => {
-  const getSize = () => {
-    if (window.innerWidth >= 1024) {
-      // lg breakpoint and above
-      return { width: 600, height: 400 };
-    }
-    // default size for smaller screens
-    return { width: 390, height: 300 };
+export const RowBpnTwo = ({ dataset }) => {
+
+
+  const valueFormatter = (value) => `Rp ${value}`;
+
+
+  const chartSetting = {
+    yAxis: [
+      {
+        label: '',
+      },
+    ],
+    series: [
+      { dataKey: 'Harga_Sebenarnya', label: 'Harga Sebenarnya', valueFormatter },
+      { dataKey: 'Prediksi_Harga', label: 'Harga Prediksi', valueFormatter }
+    ],
+    height: 300,
+    sx: {
+      [`& .${axisClasses.directionY} .${axisClasses.label}`]: {
+        transform: 'translateX(-10px)',
+      },
+    },
   };
 
-  const [size, setSize] = React.useState(getSize());
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      setSize(getSize());
-    };
-    
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+  // Pastikan dataset tidak null atau undefined sebelum digunakan
+  if (!dataset || dataset.length === 0) {
+    return <div>No data available</div>;
+  }
 
   return (
-    <div style={{ width: size.width, height: size.height }}>
+    <div style={{ width: '100%' }}>
       <LineChart
-        xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
-        series={[
-          {
-            data: [2, 5.5, 2, 8.5, 1.5, 5],
-            area: true,
-          },
+        dataset={dataset}
+        xAxis={[
+          { scaleType: 'band', dataKey: 'Tanggal' },
         ]}
-        width={size.width}
-        height={size.height}
+        {...chartSetting}
       />
     </div>
   );
