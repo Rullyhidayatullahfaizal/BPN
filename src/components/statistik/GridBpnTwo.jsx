@@ -3,6 +3,11 @@ import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 
 const columns = [
+  {
+    field: "Index", 
+    headerName: "Index", 
+    width: 150 
+  },
   { 
     field: "Provinsi", 
     headerName: "Provinsi", 
@@ -15,6 +20,12 @@ const columns = [
     editable: true,
   },
   {
+    field: "Harga_Sebenarnya",
+    headerName: "Harga Sebenarnya",
+    width: 150,
+    editable: true,
+  },
+  {
     field: "Tanggal",
     headerName: "Tanggal",
     width: 150,
@@ -22,13 +33,13 @@ const columns = [
   },
 ];
 
-export const GridBpn = ({ rows = [] }) => {
+export const GridBpnTwo = ({ rows = [] }) => {
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns}
-        getRowId={(row) => `${row.Provinsi}-${row.Tanggal}`}
+        getRowId={(row) => `${row.Provinsi}-${row.Tanggal}-${row.Index}`}
         initialState={{
           pagination: {
             paginationModel: {

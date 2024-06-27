@@ -4,11 +4,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export const  SelectedBpn = ({title}) => {
-  const [age, setAge] = React.useState('');
+export const  SelectedBpn = ({title,setSelectedOption}) => {
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setSelectedOption(event.target.value);
   };
 
   return (
@@ -18,18 +17,17 @@ export const  SelectedBpn = ({title}) => {
         <Select
           labelId="demo-simple-select-autowidth-label"
           id="demo-simple-select-autowidth"
-          value={age}
           onChange={handleChange}
           autoWidth
           label="Age"
+          defaultValue="Prediksi Lstm"
           
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value={10}>Twenty</MenuItem>
-          <MenuItem value={21}>Twenty one</MenuItem>
-          <MenuItem value={22}>Twenty one and a half</MenuItem>
+          
+          <MenuItem value="Prediksi Lstm">Prediksi Lstm</MenuItem>
+          <MenuItem value="Testing Lstm">Testing Lstm</MenuItem>
+          <MenuItem value="Prediksi Random Forrest">Prediksi Random Forrest</MenuItem>
+          <MenuItem value="Testing Random Forrest">Testing Random Forrest</MenuItem>
         </Select>
       </FormControl>
     </div>
