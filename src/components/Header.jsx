@@ -163,14 +163,14 @@ export const Header = () => {
                 )}
               </div>
 
-              <li>
+              {/* <li>
                 <Link
                   to="/report"
                   className="block px-4 py-2 text-sm font-semibold rounded-lg  hover:bg-green_three hover:text-white focus:bg-green_three focus:text-white focus:outline-none focus:shadow-outline"
                 >
                   Report
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="/peta"

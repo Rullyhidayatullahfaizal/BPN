@@ -8,6 +8,7 @@ import { Auth } from "./pages/Auth";
 import { DetailPeta } from "./pages/DetailPeta";
 import { Logo } from "./pages/Logo";
 import { Struktur } from "./pages/Struktur";
+import { Dashboard } from "./components/Dashboard";
 
 
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="logo" element={<Logo />} />
         <Route path="struktur" element={<Struktur />} />        
         <Route path="*" element={<NoPage />} />
+        {/* <Route path="/dashboard" element={<Dashboard/>} /> */}
       </Routes>
     </>
   );

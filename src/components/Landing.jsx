@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const LandingOne = () => {        
+const LandingOne = ({onStatistikClick }) => {        
     return (
         <div className="relative pt-48 pb-12 bg-[#FFFBDA] xl:pt-20 sm:pb-16 lg:pb-32 xl:pb-48 2xl:pb-56">
     <div className="absolute inset-0 lg:inset-y-0 lg:left-0">
@@ -17,10 +17,10 @@ const LandingOne = () => {
                         <span className="font-serif italic font-normal text-8xl">Prediksi</span><br />
                         <span className="font-sans font-normal text-7xl">Bahan Pangan</span>
                     </p>
-                    <p className="max-w-md mt-5 font-sans text-base font-normal leading-7 text-black text-opacity-900">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu penatibus pellentesque dolor consequat ligula egestas massa gravida. Porttitor venenatis enim praesent.</p>
+                    <p className="max-w-md mt-5 font-sans text-base font-normal leading-7 text-black text-opacity-900">Memberdayakan petani dan dunia usaha untuk membuat keputusan yang tepat mengenai produksi dan pengadaan bahan pangan melalui prediksi yang didukung AI</p>
                     <div className="flex items-center mt-8 space-x-3 sm:space-x-4">
-                        <a
-                            href="#"
+                        <button
+                            onClick={onStatistikClick }
                             title=""
                             className="
                                 inline-flex
@@ -40,12 +40,14 @@ const LandingOne = () => {
                                 sm:text-lg
                                 text-green_three
                                 hover:bg-opacity-90
+                                hover:bg-green_three
+                                hover:text-yellow
                                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-secondary
                             "
                             role="button"
                         >
                             Statistik
-                        </a>
+                        </button>
 
                         <Link
                             to="/peta"

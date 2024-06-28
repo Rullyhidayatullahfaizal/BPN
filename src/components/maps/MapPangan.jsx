@@ -226,17 +226,59 @@ useEffect(() => {
         <button
           className="bg-green_three px-5 py-2 text-white rounded hover:text-yellow hover:bg-red-600"
           onClick={() => openModal("Laporan", 
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, porro ipsa consequatur eum rem hic exercitationem illum, qui fugiat esse voluptatem, ad cumque quisquam beatae dolorem voluptate laborum aut earum!
-          </div>)}
+            <div>
+            <h3 className="font-semibold mb-2">Pendahuluan</h3>
+            <p>
+              Laporan ini menyajikan hasil analisis data prediksi harga beras menggunakan model LSTM dan Random Forest. Tujuan dari laporan ini adalah untuk memberikan wawasan tentang tren harga beras di berbagai provinsi di Indonesia.
+            </p>
+          
+            <h3 className="font-semibold mt-4 mb-2">Metodologi</h3>
+            <p>
+              Data dikumpulkan dari sumber terpercaya dan dianalisis menggunakan dua model utama: LSTM dan Random Forest. Prediksi harga beras dilakukan berdasarkan data historis dan faktor-faktor yang mempengaruhi harga.
+            </p>
+          
+            <h3 className="font-semibold mt-4 mb-2">Hasil</h3>
+            <p>
+              Hasil analisis menunjukkan bahwa model LSTM memiliki tingkat akurasi yang lebih tinggi dalam memprediksi harga beras dibandingkan dengan Random Forest. Namun, kedua model memberikan wawasan yang berharga tentang tren harga beras.
+            </p>
+          
+            <h3 className="font-semibold mt-4 mb-2">Kesimpulan</h3>
+            <p>
+              Analisis ini membantu dalam memahami fluktuasi harga beras dan dapat digunakan sebagai dasar untuk pengambilan keputusan terkait kebijakan pangan di Indonesia. Disarankan untuk menggunakan hasil prediksi ini dalam perencanaan strategis jangka panjang.
+            </p>
+          </div>
+          )}
         >
           Laporan
         </button>
         <button
           className="bg-green_three px-5 py-2 text-white rounded hover:text-yellow hover:bg-red-600"
-          onClick={() => openModal("Ket Indikator", <div>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Possimus magnam quos eaque. Incidunt, voluptate est. Officia impedit, voluptate aliquam accusamus, velit sint at commodi porro quisquam harum qui omnis neque!
-          </div>)}
+          onClick={() => openModal("Ket Indikator", 
+            <div>
+            <h3 className="font-semibold mb-2">Ket Indikator</h3>
+            <p>
+              Dalam analisis ini, beberapa indikator kunci digunakan untuk mengevaluasi dan memprediksi harga beras. Berikut penjelasan dari setiap indikator:
+            </p>
+          
+            <ul className="list-disc ml-5 mt-2">
+              <li>
+                <strong>Harga Sebenarnya:</strong> Harga pasar aktual beras di setiap provinsi.
+              </li>
+              <li>
+                <strong>Prediksi Harga:</strong> Harga beras yang diprediksi oleh model berdasarkan data historis.
+              </li>
+              <li>
+                <strong>Tanggal:</strong> Tanggal data dicatat atau diprediksi.
+              </li>
+              <li>
+                <strong>Provinsi:</strong> Lokasi geografis data yang dikumpulkan atau diprediksi.
+              </li>
+            </ul>
+            <p className="mt-2">
+              Indikator-indikator ini penting untuk memahami tren harga beras dan faktor-faktor yang mempengaruhinya.
+            </p>
+          </div>
+          )}
         >
           Ket Indikator
         </button>
@@ -248,7 +290,31 @@ useEffect(() => {
         </button> */}
         <button
           className="bg-green_three px-5 py-2 text-white rounded hover:text-yellow hover:bg-red-600"
-          onClick={() => openModal("Panduan", <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, veniam consequuntur! Cumque eum iste rem odio voluptatibus quia blanditiis ex aut quae amet? Odio veritatis consectetur asperiores officia quis explicabo.</div>)}
+          onClick={() => openModal("Panduan", 
+            <div>
+            <h3 className="font-semibold mb-2">Panduan Penggunaan Dashboard</h3>
+            <p>
+              Dashboard ini dirancang untuk memberikan wawasan tentang prediksi harga beras di berbagai provinsi. Berikut adalah panduan untuk menggunakan dashboard ini:
+            </p>
+          
+            <h4 className="font-semibold mt-4">Memilih Provinsi</h4>
+            <p>
+              Klik pada peta untuk memilih provinsi yang ingin Anda lihat. Data terkait provinsi tersebut akan ditampilkan dalam modal.
+            </p>
+          
+            <h4 className="font-semibold mt-4">Menampilkan Data</h4>
+            <p>
+              Pilih opsi "LSTM" atau "Random Forest" untuk melihat hasil prediksi berdasarkan model yang dipilih. Data akan ditampilkan dalam bentuk grafik dan tabel.
+            </p>
+          
+            <h4 className="font-semibold mt-4">Interaksi dengan Grafik</h4>
+            <p>
+              Arahkan kursor pada grafik untuk melihat nilai prediksi dan harga sebenarnya pada titik waktu tertentu. Gunakan tooltip untuk informasi lebih lanjut.
+            </p>
+          
+            
+          </div>          
+        )}
         >
           Panduan
         </button>
